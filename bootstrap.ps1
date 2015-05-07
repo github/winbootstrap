@@ -59,7 +59,7 @@ function Register-Sshd {
   $password = [Web.Security.Membership]::GeneratePassword(16, 4)
   C:\cygwin\bin\bash.exe --login -- /usr/bin/ssh-host-config --yes --user cyg_server --pwd $password
   # Ensure the cyg_server user has the necessary permissions to seteuid for privilege separation
-  C:\cygwin\bin\cyglsa-config
+  C:\cygwin\bin\bash.exe --login -- echo -e "yes\n" | /usr/bin/cyglsa-config
   netsh advfirewall firewall add rule name=sshd dir=in action=allow program=C:\cygwin\usr\sbin\sshd.exe localport=22 protocol=tcp
   net start sshd
 }
