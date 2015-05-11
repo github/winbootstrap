@@ -61,7 +61,6 @@ function Register-Sshd {
   # Ensure the cyg_server user has the necessary permissions to seteuid for privilege separation
   C:\cygwin\bin\bash.exe --login -c -- 'echo -e "yes" | /usr/bin/cyglsa-config'
   netsh advfirewall firewall add rule name=sshd dir=in action=allow program=C:\cygwin\usr\sbin\sshd.exe localport=22 protocol=tcp
-  net start sshd
 }
 
 Install-Cygwin
