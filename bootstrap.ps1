@@ -57,6 +57,15 @@ function Rebase {
 function Register-Sshd {
   Add-Type -Assembly System.Web
   $password = [Web.Security.Membership]::GeneratePassword(16, 4)
+  
+  # Work around what I can only assume is a bug in cygwin-service-installation-helper.sh where it treats
+  # the lack of the LOGONSERVER environment variable as a sign that the computer is part of an active directory domain.
+  # It then sets the csih_PRIVILEGED_USERNAME variable to "${COMPUTERNAME,,*}+${username}" (eg win-48fup9ha63n+cyg_server)
+  # which makes the script fail with the message "Setting password expiry for user 'win-48fup9ha63n+cyg_server' failed!"
+  # 
+  # We work around this by setting LOGONSERVER to what the script expects which I assume is a very client-OSy thing.
+  $ENV:LOGONSERVER="\\MicrosoftAccount"
+  
   C:\cygwin\bin\bash.exe --login -- /usr/bin/ssh-host-config --yes --user cyg_server --pwd $password
   # Ensure the cyg_server user has the necessary permissions to seteuid for privilege separation
   C:\cygwin\bin\bash.exe --login -c -- 'echo -e "yes" | /usr/bin/cyglsa-config'
