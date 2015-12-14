@@ -5,7 +5,7 @@ function Install-Cygwin {
   $client = New-Object Net.WebClient
   $cygwinInstaller = Join-Path ([IO.Path]::GetTempPath()) ([IO.Path]::GetRandomFileName() + ".exe")
   
-  $client.DownloadFile("http://cygwin.com/setup-x86.exe", $cygwinInstaller)
+  $client.DownloadFile("https://cygwin.com/setup-x86.exe", $cygwinInstaller)
   
   $packages = @(
     'libintl8',
@@ -35,7 +35,9 @@ function Install-Cygwin {
     'libhx509_5',
     'libsqlite3_0',
     'libroken18',
-    'openssh'
+    'openssh',
+    'vim',
+    'vim-common'
   )
 
   $process = Start-Process -PassThru $cygwinInstaller --quiet-mode, --site, http://mirrors.kernel.org/sourceware/cygwin, --local-package-dir, C:\ProgramData\Cygwin, --packages, ($packages -join ",")
