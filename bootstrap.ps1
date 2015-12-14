@@ -5,7 +5,7 @@ function Install-Cygwin {
   $client = New-Object Net.WebClient
   $cygwinInstaller = Join-Path ([IO.Path]::GetTempPath()) ([IO.Path]::GetRandomFileName() + ".exe")
   
-  $client.DownloadFile("http://cygwin.com/setup-x86.exe", $cygwinInstaller)
+  $client.DownloadFile("https://cygwin.com/setup-x86.exe", $cygwinInstaller)
   
   $packages = @(
     'libintl8',
