@@ -35,7 +35,9 @@ function Install-Cygwin {
     'libhx509_5',
     'libsqlite3_0',
     'libroken18',
-    'openssh'
+    'openssh',
+    'vim',
+    'vim-common'
   )
 
   $process = Start-Process -PassThru $cygwinInstaller --quiet-mode, --site, http://mirrors.kernel.org/sourceware/cygwin, --local-package-dir, C:\ProgramData\Cygwin, --packages, ($packages -join ",")
